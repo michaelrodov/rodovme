@@ -1,0 +1,109 @@
+body{
+	font-size: 12px;
+	white-space: nowrap;	
+}
+.fontChangaOne{
+	font-family: 'Changa One', cursive;
+	}
+.fontTangerine{
+	font-family: 'Tangerine';
+	}
+	
+.inner{
+    color: #EAE1AE;
+    font-family: 'Righteous';    
+    font-size: 9px;
+	letter-spacing:2px;
+}
+#wordCloudObject {
+	width: 100%;
+	height: 100%;	
+	position: absolute;
+	top:0;
+	left:0;
+	border-radius: 15px;	
+}
+
+#wordCloudObject span {
+	position: absolute;
+	font-family: 'Nova Round', Verdana, cursive;
+	color: #A3975D;
+}
+
+#wordCloudObject  .OTB{
+	color: #756D41;
+	text-shadow: 0 1px 1px white;
+}
+.idleWords{
+    -moz-transition: opacity 0.5s ease-out 0s;
+    -ms-transition: opacity 0.5s ease-out 0s;
+    -webkit-transition: opacity 0.5s ease-out 0s;
+    -o-transition: opacity 0.5s ease-out 0s;
+    transition: opacity 0.5s ease-out 0s;
+	opacity:0.2;
+}
+.activeWords{
+	-moz-transition: opacity 0.5s ease-out 0s;
+    -ms-transition: opacity 0.5s ease-out 0s;
+    -webkit-transition: opacity 0.5s ease-out 0s;
+    -o-transition: opacity 0.5s ease-out 0s;
+    transition: opacity 0.5s ease-out 0s;	
+	opacity:1;
+}
+
+#wordCloudObject .controls {
+	-moz-transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;
+	-ms-transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;
+	-webkit-transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;
+	-0-transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;
+	transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;
+    color: #FFCC89;
+    cursor: pointer;
+    font-size: 44px;
+    text-shadow: 0 -1px 1px #FFF721, 0 1px 4px #70593C;
+}
+#wordCloudObject .controls:hover{
+	-moz-transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;
+	-ms-transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;
+	-webkit-transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;
+	-0-transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;
+	transition: color 0.5s ease-out 0s, text-shadow 0.5s ease-out 0s;	
+    color: #AD7900;
+	text-shadow: 0 -1px 1px #FFF721, 0 1px 4px #70593C, 0 0 20px yellow;
+}
+#wordCloudObject .controls:active{
+	-moz-transition: color 0.2s ease-in 0s;
+	-ms-transition: color 0.1s ease-out 0s;
+	-webkit-transition: color 0.1s ease-out 0s;
+	-0-transition: color 0.1s ease-out 0s;
+	transition: color 0.1s ease-out 0s;
+    color: #F4AD00;
+}
+#wordCloudObject #michaelrodov {
+    color: #8C744D;
+    font-family: Righteous;
+    font-size: 89px;
+    height: 100%;
+    left: -0.5px;
+    line-height: 296%;
+    position: absolute;
+    text-align: center;
+    text-shadow: -1px 1px 1px #FFE3BC, 1px -1px 1px black;
+    top: 0;
+    vertical-align: middle;
+    width: 100%;
+	cursor: pointer;
+}
+#wordCloudObject .rotate90{
+	-moz-transform:rotate(90deg); 
+	-moz-transform-origin: bottom left;
+	-ms-transform: rotate(90deg);
+	-ms-transform-origin: bottom left;	
+	-webkit-transform: rotate(90deg);
+	-webkit-transform-origin: bottom left;
+	-o-transform: rotate(90deg);
+	-o-transform-origin:  bottom left;
+	transform: rotate(90deg);
+	transform-origin:  bottom left;	
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+	}
