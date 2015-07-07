@@ -6,11 +6,27 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
     <link rel="stylesheet" href="css/index.css" type="text/css" media="screen">
+		<script src="https://apis.google.com/js/platform.js"></script>
+
+	<script src="js/auth.js"></script>
+	
+	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+<!--	
+	<script>
+		(function(w,d,s,g,js,fs){
+		  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
+		  js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
+		  js.src='https://apis.google.com/js/platform.js';
+		  fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
+		}(window,document,'script'));
+	</script>
+	-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
     <script src="js/index.js"></script>
+
 
 
 </head>
@@ -20,6 +36,10 @@
 		<img src="img/hp_logo_white.png" alt="HP" height="50px" border="0">
 	</div>
 	<div id="hptitle">Modernized Analytics</div>
+	<div id="" style="float:right; margin-right:20px">
+		<!--Adding authorization button-->
+		<button id="authorize-button">Authorize</button>
+	</div>
 </div>
 <div id="main">
     <div id="leftmain"></div>
