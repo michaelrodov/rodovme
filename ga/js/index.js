@@ -4,8 +4,6 @@
 var dashApp = angular.module('dashApp', ['ngMaterial']);
 dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 
-	handleClientLoad();
-	checkAuth();
     //init
     $scope.data = [];
     $scope.data.push({name:"agm", users: getRTUsers(), title: "Agile Manager", logo: "img/agm.svg"});
