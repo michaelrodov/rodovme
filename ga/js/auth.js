@@ -19,7 +19,7 @@
         var authorizeButton = document.getElementById('authorize-button');
         if (authResult && !authResult.error) {
           authorizeButton.style.visibility = 'hidden';
-          maApiCall();
+          //maApiCall();
          // srlApiCall();
         } else {
           authorizeButton.style.visibility = '';
@@ -32,7 +32,7 @@
         return false;
       }
     
-	// Call GA realtime API 
+/*
       function maApiCall() {
 		gapi.client.analytics.data.realtime.get ({
             'ids': maGaId,
@@ -54,3 +54,4 @@
 		  document.getElementById('srl-query').value = srlJsonParse.rows;
 		  });
 	  }
+	  */
