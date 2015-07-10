@@ -27,8 +27,8 @@ body{
     float: left;
 }
 .item_title{
-    font-size: 20px;
-    line-height: 20px;
+    font-size: 25px;
+    line-height: 25px;
     top:5px;
     left:5px;
 	margin-top:5px;
@@ -40,9 +40,9 @@ body{
 	position: relative;
 }
 .item_logo > img{
-    margin: 5px;
+    margin: -10px;
     float: right;
-    width: 64px;
+    width: 65px;
 }
 
 .item_value{

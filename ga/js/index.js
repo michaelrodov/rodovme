@@ -3,14 +3,16 @@
  */
 var dashApp = angular.module('dashApp', ['ngMaterial']);
 dashApp.controller('dashCtrl', function($scope, $http, $interval) {
-
+	var INITIAL_REFRESH = 1;
+	var REFRESH_RATE_SEC = 30;
+	
     //init
     $scope.data = [];
-    $scope.data.push({name:"agm", users: "0", title: "Agile Manager", logo: "img/agm.svg",gaid: "ga:59215255"});
-    $scope.data.push({name:"saw", users: "0", title: "Service Anywhere", logo: "img/saw.svg",gaid: "ga:85914404"});
-    $scope.data.push({name:"srl", users: "0", title: "StormRunner Load", logo: "img/srl.svg",gaid: "ga:87422827"});
+    $scope.data.push({name:"agm", users: "0", title: "Agile Manager", logo: "img/agm.png",gaid: "ga:59215255"});
+    $scope.data.push({name:"saw", users: "0", title: "Service Anywhere", logo: "img/saw.png",gaid: "ga:85914404"});
+    $scope.data.push({name:"srl", users: "0", title: "StormRunner Load", logo: "img/srl.png",gaid: "ga:87422827"});
+    $scope.data.push({name:"appm", users: "0", title: "AppPulse Mobile", logo: "img/appm.png",gaid: "ga:71897204"});
     $scope.data.push({name:"ma", users: "0", title: "MyAccount", logo: "img/hp.black.png",gaid: "ga:81002014"});
-    $scope.data.push({name:"appm", users: "0", title: "AppPulse Mobile", logo: "img/appm.svg",gaid: "ga:71897204"});
 	 
 
     $scope.refresh = function() {
@@ -19,10 +21,15 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
         }
     }
 
-
-    $interval(function(){$scope.refresh()}, 60*1000);
+    $interval(function(){
+		$scope.refresh();
+	}, REFRESH_RATE_SEC*1000);
 
 	function getRTUsers(item) {
+			//try to refresh only after GAPI client is available
+			if(gapi.client.analytics == null){
+				return;
+			}
 			 gapi.client.analytics.data.realtime.get ({
 				'ids': item.gaid,
 				'metrics': 'rt:activeUsers'
@@ -47,6 +54,10 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 			$scope.data[i].users = users;
 		}
 	}	
+	
+	
+	
+	
 /*
     $http.get("rest/mock/all_customers_aggregated")
         .success(function(response) {
