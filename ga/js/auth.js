@@ -6,9 +6,11 @@
 	  var srlGaId = 'ga:87422827';
 	  var apmGaId = 'ga:93588054';
      
+     
 	 function handleClientLoad() {
         gapi.client.setApiKey(apiKey);
         window.setTimeout(checkAuth,100);
+        window.setInterval(checkAuth,2700000)
       }
 	  
       function checkAuth() {
@@ -31,3 +33,4 @@
         return false;
       }
  
+ window.setInterval(function checkAuth(), 2700000);	

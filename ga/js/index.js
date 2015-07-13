@@ -55,9 +55,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 		}
 	}	
 	
-window.setInterval(function checkAuth(){
-  /// call your function here
-}, 2700000);	
+
 	
 	
 /*
