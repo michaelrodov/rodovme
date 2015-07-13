@@ -37,7 +37,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 		}
 		**
 		*/
-		if($scope.determinateValue>REFRESH_RATE_SEC){
+		if($scope.determinateValue>100){
 			$scope.determinateValue=1; 
 			$scope.refresh();
 		}
