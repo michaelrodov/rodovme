@@ -33,4 +33,3 @@
         return false;
       }
  
- window.setInterval(function checkAuth(), 2700000);	
