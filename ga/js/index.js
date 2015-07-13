@@ -4,7 +4,7 @@
 var dashApp = angular.module('dashApp', ['ngMaterial']);
 dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 	var INITIAL_REFRESH = 1;
-	var REFRESH_RATE_SEC = 30;
+	var REFRESH_RATE_SEC = 10;
 	
     //init
     $scope.data = [];
@@ -55,7 +55,9 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 		}
 	}	
 	
-	
+window.setInterval(function checkAuth(){
+  /// call your function here
+}, 2700000);	
 	
 	
 /*
