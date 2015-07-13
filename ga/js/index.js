@@ -1,5 +1,6 @@
 /**
  * Created by Carlos on 29/06/2015.
+ *
  */
 var dashApp = angular.module('dashApp', ['ngMaterial'])
 				.config(function($mdThemingProvider) {
