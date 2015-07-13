@@ -39,7 +39,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 		**
 		*/
 		if($scope.determinateValue>99){
-			$scope.determinateValue=1; 
+			$scope.determinateValue=0; 
 			$scope.refresh();
 		}
 		$scope.determinateValue += Math.round(100/REFRESH_RATE_SEC);
