@@ -13,7 +13,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 	var REFRESH_RATE_SEC = 10;
 	var AUTH_RATE = 300;
 	$scope.authenticateIn=300;
-	$scope.determinateValue = 1;
+	$scope.determinateValue = 0;
 	$scope.maxValue = REFRESH_RATE_SEC;
     //init
     $scope.data = [];
@@ -38,7 +38,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 		}
 		**
 		*/
-		if($scope.determinateValue>100){
+		if($scope.determinateValue>99){
 			$scope.determinateValue=1; 
 			$scope.refresh();
 		}
