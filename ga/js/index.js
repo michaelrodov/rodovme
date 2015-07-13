@@ -1,11 +1,19 @@
 /**
  * Created by Carlos on 29/06/2015.
  */
-var dashApp = angular.module('dashApp', ['ngMaterial']);
+var dashApp = angular.module('dashApp', ['ngMaterial'])
+				.config(function($mdThemingProvider) {
+					  $mdThemingProvider.theme('default')
+						.primaryPalette('yellow')
+					});
+					
 dashApp.controller('dashCtrl', function($scope, $http, $interval) {
-	var INITIAL_REFRESH = 1;
+
 	var REFRESH_RATE_SEC = 30;
-	
+	var AUTH_RATE = 300;
+	$scope.authenticateIn=300;
+	$scope.determinateValue = 1;
+	$scope.maxValue = REFRESH_RATE_SEC;
     //init
     $scope.data = [];
     $scope.data.push({name:"agm", users: "0", title: "Agile Manager", logo: "img/agm.png",gaid: "ga:59215255"});
@@ -20,10 +28,22 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
             getRTUsers($scope.data[i]);
         }
     }
-
+	
+	/*refresh every second*/
     $interval(function(){
-		$scope.refresh();
-	}, REFRESH_RATE_SEC*1000);
+		/*
+		if(authenticateIn<1){
+			checkAuth();
+		}
+		**
+		*/
+		if($scope.determinateValue>REFRESH_RATE_SEC){
+			$scope.determinateValue=1; 
+			$scope.refresh();
+		}
+		$scope.determinateValue += Math.round(100/REFRESH_RATE_SEC);
+		
+	}, 1000);
 
 	function getRTUsers(item) {
 			//try to refresh only after GAPI client is available
