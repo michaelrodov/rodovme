@@ -9,8 +9,8 @@ var dashApp = angular.module('dashApp', ['ngMaterial'])
 					});
 					
 dashApp.controller('dashCtrl', function($scope, $http, $interval) {
-
-	var REFRESH_RATE_SEC = 30;
+	
+	var REFRESH_RATE_SEC = 10;
 	var AUTH_RATE = 300;
 	$scope.authenticateIn=300;
 	$scope.determinateValue = 1;
@@ -76,7 +76,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 		}
 	}	
 	
-	
+
 	
 	
 /*
