@@ -12,7 +12,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
     $scope.data.push({name:"saw", users: "0", title: "Service Anywhere", logo: "img/saw.png",gaid: "ga:85914404"});
     $scope.data.push({name:"srl", users: "0", title: "StormRunner Load", logo: "img/srl.png",gaid: "ga:87422827"});
     $scope.data.push({name:"appm", users: "0", title: "AppPulse Mobile", logo: "img/appm.png",gaid: "ga:71897204"});
-    $scope.data.push({name:"ma", users: "0", title: "MyAccount", logo: "img/hp.black.png",gaid: "ga:81002014"});
+    $scope.data.push({name:"ma", users: "0", title: "MyAccount", logo: "img/grey-HP-logo.png",gaid: "ga:81002014"});
 	 
 
     $scope.refresh = function() {

@@ -40,9 +40,8 @@ body{
 	position: relative;
 }
 .item_logo > img{
-    margin: -10px;
-    float: right;
-    width: 65px;
+    margin: -7px;    
+    width: 57px;
 }
 
 .item_value{
