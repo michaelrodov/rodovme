@@ -20,6 +20,19 @@ body{
 	position: relative;
     line-height: 50px;
 	margin: 5px; 
+	display: inline-flex;
+}
+#authorize>*{
+	position: absolute;
+	right:0;
+	margin:-3px;
+}
+#login_img{
+  height: 48px;
+  width: 48px;
+  position: relative;
+  top: 2px;
+  right: 2px;
 }
 #flex-item > div {
 	width: 100%;

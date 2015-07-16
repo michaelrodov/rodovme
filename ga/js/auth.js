@@ -21,8 +21,10 @@ apiKey = apiKey.substring(apiKey.indexOf("=") + 1);
 	  
       function handleAuthResult(authResult) {
         var authorizeButton = document.getElementById('authorize-button');
+        var progressCircular = document.getElementById('progress-circular');
         if (authResult && !authResult.error) {
           authorizeButton.style.visibility = 'hidden';
+          progressCircular.style.visibility = '';
 		  //authentication finished
         } else {
           authorizeButton.style.visibility = '';
