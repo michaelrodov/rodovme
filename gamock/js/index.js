@@ -26,7 +26,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 
     $scope.refresh = function() {
         for (var i = 0, len = $scope.data.length; i < len; i++) {
-            getRTUsers($scope.data[i]);
+            $scope.data[i].users = getRTUsers($scope.data[i]);
         }
     }
 	
