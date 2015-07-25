@@ -8,13 +8,15 @@ var dashApp = angular.module('dashApp', ['ngMaterial'])
 						.primaryPalette('yellow')
 					});
 					
-dashApp.controller('dashCtrl', function($scope, $http, $interval) {
+dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 	
 	var REFRESH_RATE_SEC = 10;
 	var AUTH_RATE = 300;
 	$scope.authenticateIn=300;
 	$scope.determinateValue = 0;
 	$scope.maxValue = REFRESH_RATE_SEC;
+	$scope.runPermited = true;
+	$scope.notification_class = "notification_hidden";
     //init
     $scope.data = [];
     $scope.data.push({name:"agm", users: "0", title: "Agile Manager", logo: "img/agm.png",gaid: "ga:59215255"});
@@ -25,8 +27,10 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 	 
 
     $scope.refresh = function() {
-        for (var i = 0, len = $scope.data.length; i < len; i++) {
-            getRTUsers($scope.data[i]);
+		if($scope.runPermited){
+			for (var i = 0, len = $scope.data.length; i < len; i++) {
+				getRTUsers($scope.data[i]);
+			}
         }
     }
 	
@@ -51,6 +55,18 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 			if(gapi.client.analytics == null){
 				return;
 			}
+			
+			$http.get("https://www.googleapis.com/analytics/v3/data/realtime?metrics=rt%3AactiveUsers&ids="+item.gaid+"&key="+apiKey+"&access_token="+authentication.access_token)
+				.success(function(response) {
+					$scope.setDataValueByGaid(null,null);
+				})
+				.error(function(data, status){
+					$scope.setRunPermited(false);
+					$scope.showAlertToast("HTTP " + data.error.code + " " + data.error.message);
+					return;
+				});
+
+			/*
 			 gapi.client.analytics.data.realtime.get ({
 				'ids': item.gaid,
 				'metrics': 'rt:activeUsers'
@@ -64,6 +80,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 					$scope.setDataValueByGaid(maJsonParse.query.ids, maJsonParse.rows[0][0]);
 				}
 			  });
+			*/  
 		  }
 		  
 	$scope.setDataValueByGaid = function(gaid, users){
@@ -77,16 +94,24 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval) {
 	}	
 	
 
+	$scope.showAlertToast = function(message) {
+		$scope.notification = message;
+		$scope.notification_class = "notification_visible";
+	}
 	
+	$scope.hideAlertToast = function() {
+		$scope.notification = "";
+		$scope.notification_class = "notification_hidden";
+	}
 	
-/*
-    $http.get("rest/mock/all_customers_aggregated")
-        .success(function(response) {
-
-            var data = new google.visualization.DataTable(response);
-            createChart(document.getElementById('gvizPie'), "PieChart", data);
-        });
-*/
-
+	$scope.setRunPermited = function(status){
+		if(status === true){
+			$scope.hideAlertToast(); //in any case if run is permitted remove the warning/error toast
+			$scope.runPermited = true;
+		}
+		else{
+			$scope.runPermited = false;
+		}
+	}
 
 });

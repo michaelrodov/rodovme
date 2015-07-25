@@ -26,6 +26,9 @@
 	
 </head>
 <body ng-controller="dashCtrl">
+<div id="notification" class={{notification_class}}>{{notification}} 
+	<md-button id="retry-button" aria-label="Retry" ng-click="setRunPermited(true)">Retry</md-button>
+</div>
 <div id="topbar">
 	<div id="hplogo">
 		<img src="img/hp_logo_white.png" alt="HP" height="50px" border="0">
@@ -37,7 +40,6 @@
         <md-button id="authorize-button" class="md-fab md-primary" aria-label="Login">
           <img id="login_img" src="img/user-512.png"></img>
         </md-button>
- 
 		<!-- Countdown bar to show whens the next refresh of data 0-->
 		<md-progress-circular id="progress-circular" md-mode="determinate" value="{{determinateValue}}" style="visibility:hidden"></md-progress-circular>
 	</div>
