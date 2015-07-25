@@ -1,5 +1,5 @@
 .notification_hidden{
-	background-color: rgba(189, 39, 26, 0);
+	background-color: rgba(100, 100, 100 0);
 	top: -45px;
 	-webkit-transition: background-color 500ms, top 500ms ease;
 	-moz-transition: background-color 500ms, top 500ms ease;
@@ -11,6 +11,15 @@
 .notification_hidden * {
 	display: none;
 }
+.notification_error {
+	background-color: #ED1B1B;
+}
+.notification_warning {
+	background-color: #FB8C00;
+}
+.notification_info {
+	background-color: #1BA5ED;
+}
 .notification_visible{
 	position: fixed !important;
 	font-family: 'Open Sans',sans-serif;
@@ -18,7 +27,6 @@
 	top: 35px;
 	color: white;
 	left: 50%;
-	background-color: rgb(189, 39, 26);
 	padding: 0 10px;
     -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);

@@ -57,12 +57,12 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 			}
 			
 			$http.get("https://www.googleapis.com/analytics/v3/data/realtime?metrics=rt%3AactiveUsers&ids="+item.gaid+"&key="+apiKey+"&access_token="+authentication.access_token)
-				.success(function(response) {
-					$scope.setDataValueByGaid(null,null);
+				.success(function(data, status) {
+					$scope.setDataValueByGaid(item.gaid,data.rows.pop().toString());
 				})
 				.error(function(data, status){
 					$scope.setRunPermited(false);
-					$scope.showAlertToast("HTTP " + data.error.code + " " + data.error.message);
+					$scope.showErrorToast("HTTP " + data.error.code + " " + data.error.message);
 					return;
 				});
 
@@ -94,9 +94,19 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 	}	
 	
 
-	$scope.showAlertToast = function(message) {
+	$scope.showErrorToast = function(message) {
 		$scope.notification = message;
-		$scope.notification_class = "notification_visible";
+		$scope.notification_class = "notification_visible notification_error";
+	}
+
+	$scope.showWarningToast = function(message) {
+		$scope.notification = message;
+		$scope.notification_class = "notification_visible notification_warning";
+	}
+
+	$scope.showInfoToast = function(message) {
+		$scope.notification = message;
+		$scope.notification_class = "notification_visible notification_info";
 	}
 	
 	$scope.hideAlertToast = function() {
