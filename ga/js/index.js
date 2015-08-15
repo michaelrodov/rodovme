@@ -43,7 +43,9 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 			$scope.refresh();
 		}
 		if((linearBackoff--) < 1) {
-			$scope.determinateValue += Math.round(100 / REFRESH_RATE_SEC);
+			if($scope.runPermited) {
+				$scope.determinateValue += Math.round(100 / REFRESH_RATE_SEC);
+			}
 		}
 	}, 1000);
 
@@ -60,12 +62,17 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 					linearBackoffCycle=1;
 				})
 				.error(function(data, status){
-					//$scope.setRunPermited(false);
 					$scope.showErrorToast("HTTP " + data.error.code + " " + data.error.message);
 					//in case of error, refresh time is backed off
 					// multiplies by REFRESH_RATE_SEC*linearBackoff * 0/1/2/3
 					// i.e. first error refresh rate = 0s, second = 60s, third is 120s etc
-					linearBackoff= (linearBackoffCycle++% 4) * 6;
+					// in case error is 403 (access denied) stop sending requests
+					if(status != "403") {
+						linearBackoff = (linearBackoffCycle++ % 4) * 6;
+					}
+					else{
+						$scope.setRunPermited(false);
+					}
 					return;
 				});
 
