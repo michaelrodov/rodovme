@@ -11,6 +11,8 @@ var dashApp = angular.module('dashApp', ['ngMaterial'])
 dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 	
 	var REFRESH_RATE_SEC = 10;
+	var linearBackoff = 0;
+	var linearBackoffCycle = 3;
 	var AUTH_RATE = 300;
 	$scope.authenticateIn=300;
 	$scope.determinateValue = 0;
@@ -36,18 +38,13 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 	
 	/*refresh every second*/
     $interval(function(){
-		/*
-		if(authenticateIn<1){
-			checkAuth();
-		}
-		**
-		*/
 		if($scope.determinateValue>99){
 			$scope.determinateValue=0; 
 			$scope.refresh();
 		}
-		$scope.determinateValue += Math.round(100/REFRESH_RATE_SEC);
-		
+		if((linearBackoff--) < 1) {
+			$scope.determinateValue += Math.round(100 / REFRESH_RATE_SEC);
+		}
 	}, 1000);
 
 	function getRTUsers(item) {
@@ -59,10 +56,16 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 			$http.get("https://www.googleapis.com/analytics/v3/data/realtime?metrics=rt%3AactiveUsers&ids="+item.gaid+"&key="+apiKey+"&access_token="+authentication.access_token)
 				.success(function(data, status) {
 					$scope.setDataValueByGaid(item.gaid,data.rows.pop().toString());
+					linearBackoff=0; //in case of success, refresh period REFRESH_RATE_SEC
+					linearBackoffCycle=1;
 				})
 				.error(function(data, status){
-					$scope.setRunPermited(false);
+					//$scope.setRunPermited(false);
 					$scope.showErrorToast("HTTP " + data.error.code + " " + data.error.message);
+					//in case of error, refresh time is backed off
+					// multiplies by REFRESH_RATE_SEC*linearBackoff * 0/1/2/3
+					// i.e. first error refresh rate = 0s, second = 60s, third is 120s etc
+					linearBackoff= (linearBackoffCycle++% 4) * 6;
 					return;
 				});
 
