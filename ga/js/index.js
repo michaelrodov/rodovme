@@ -57,6 +57,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 			
 			$http.get("https://www.googleapis.com/analytics/v3/data/realtime?metrics=rt%3AactiveUsers&ids="+item.gaid+"&key="+apiKey+"&access_token="+authentication.access_token)
 				.success(function(data, status) {
+					hideAlertToast();
 					$scope.setDataValueByGaid(item.gaid,data.rows.pop().toString());
 					linearBackoff=0; //in case of success, refresh period REFRESH_RATE_SEC
 					linearBackoffCycle=1;
