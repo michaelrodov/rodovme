@@ -1,0 +1,12 @@
+.mychart{
+    float: left;
+    position: relative;
+    width: 70%;
+}
+.controller{
+    float: left;
+    position: relative;
+}
+.mychart .c3-target-main-data{
+
+}
