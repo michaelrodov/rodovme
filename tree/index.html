@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="vendor/c3.css" rel="stylesheet" type="text/css">
+    <link href="chart.css" rel="stylesheet" type="text/css">
+
+    <!-- Load d3.js and c3.js -->
+    <script src="vendor/d3.js" charset="utf-8"></script>
+    <script src="vendor/c3.js"></script>
+    <script src="datasource.js"></script>
+    <script src="chart.js"></script>
+
+    <meta charset="UTF-8">
+    <title>C3 - Chart WORKON</title>
+</head>
+<body>
+<div>
+<div class="mychart"></div>
+<div class="controller">
+    <ul>
+        <li onclick="loadData(this.innerText)">data1</li>
+        <li onclick="loadData(this.innerText)">data2</li>
+        <li onclick="loadData(this.innerText)">data3</li>
+        <li onclick="loadData(this.innerText)">data4</li>
+        <li onclick="loadData(this.innerText)">data5</li>
+    </ul>
+</div>
+</div>
+<script>
+    c3.generate(getC3LicenseUsageChart('.mychart', datasrc, 11));
+    console.info("drawn");
+    var controllerList = document.getElementsByClassName("controller");
+</script>
+</body>
+</html>
