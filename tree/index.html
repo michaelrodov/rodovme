@@ -27,8 +27,10 @@
 </div>
 </div>
 <script>
-    c3.generate(getC3LicenseUsageChart('.mychart', datasrc, 11));
-    console.info("drawn");
+    chartObject = c3.generate(getC3LicenseUsageChart('.mychart', datasrc, 3));
+    chartObject.hide();
+    chartObject.show(['data1','data2','data3']);
+    //chartObject.focus('data1');
     var controllerList = document.getElementsByClassName("controller");
 </script>
 </body>

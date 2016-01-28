@@ -1,11 +1,73 @@
 /**
  * Created by Carlos on 27/01/2016.
  */
-            var chartObject;
 
-            function loadData(newDataId){
-                console.info("loading data");
-                chartObject.data.shown(["data1","data2","data3"]);
+/*Global objects*/
+var chartObject;
+var maxChartsToShow;
+var colorsArray = [];
+main: "#01a982",
+    second: "#614767",
+    third: "#ff8d6d"
+            /***
+             * Does nothing - needed to block build in mouseover mouseout events
+             * @param id
+             */
+            function doNothing(id){
+                return;
+            }
+
+
+            /**
+             * build an array of arrays containing the xAxis labels and the actual data
+             * @param data
+             * @returns {Array}
+             */
+            function getChartData(data) {
+                var i = 0;
+                var namesArray=[]; //global objects
+                var columnsArray=[];
+                var chartData=[];
+                for (var key in data.licenses) {
+                    columnsArray.push(data.licenses[key]); //the array of data points that is displayed on the chart
+                    namesArray['data' + i] = key.toString(); //the names that is going to displayed
+                    i++;
+                }
+
+                chartData["columns"] = columnsArray;
+                chartData["names"] = namesArray;
+
+                return chartData;
+
+            }
+
+
+
+
+            function onLegendClick(clickedId) {
+                var shown=[];
+                var remove = false;
+                var shownObj = chartObject.data.shown();
+                //fetch all shown ids
+                for (var i = 0; i < shownObj.length; i++) {
+                    if(clickedId != shownObj[i].id){
+                        shown.push(shownObj[i].id);
+                    }else{
+                        remove = true;
+                    }
+                }
+
+                //cut out only the first maxChartsToShow-1, since we are going to add a new one and we need the space
+                if (shown.length > maxChartsToShow-1) {
+                    shown = shown.slice(0, maxChartsToShow - 1);
+                }
+
+                if(!remove){
+                    shown.push(clickedId);
+                }
+
+                chartObject.hide(); //hide all
+                chartObject.show(shown);
             }
 
             /**
@@ -18,19 +80,11 @@
                 //var _NEWLINE = "&#xA;"
                 var xAxisName = data.xAxisName;
                 var xFormat = data.xFormat;
-                var columnsArray = [];
-
-                /*build an array of arrays containing the xAxis labels and the actual data*/
-                for(var key in data.licenses){
-                    columnsArray.push(data.licenses[key]);
-                    if(columnsArray.length > maxResults){
-                        //we need to count one more time since first array in columnsArray is always xAxis values
-                        break;
-                    }
-                }
+                var chartData = getChartData(data);
+                maxChartsToShow = maxResults;
 
                 /*Object that represents structure and properties of the c3 chart*/
-                chartObject = {
+                var chartObjectDefinition = {
                     bindto: bindToSelector,
                     legend: {
                         show: true,
@@ -40,17 +94,29 @@
                             x: 20,
                             y: 10,
                             step: data.licenses.length
+                        },
+                        item: {
+                            onclick: onLegendClick,
+                            onmouseover: doNothing,
+                            onmouseout: doNothing
                         }
+                    },
+                    grid: {
+                        x: {
+                            show: false
+                        },
+                        y: {
+                            show: true
+                        }
+                    },
+                    tooltip: {
+                        show: false
                     },
                     data: {
                         type: 'area-spline', //TODO check if its ok with UX (spline not line)
                         x: xAxisName,
-                        columns: columnsArray,
-                        names: { //TODO load /reload dynamically
-                          data1: "queriesLimit",
-                          data2: "spaceLimitGB",
-                          data3: "expressStorage"
-                        },
+                        columns: chartData["columns"],
+                        names: chartData["names"],
                         classes: { //access via c3-target-main-data
                             data1: "main-data",
                             data2: "second-data",
@@ -65,7 +131,7 @@
                         xFormat: "%Y-%m" //this tells the chart how to interpret the x axis data
                     },
                     point: {
-                        show: true,
+                        show: false,
                         r: 5,
                         focus: {
                             expand: {
@@ -77,6 +143,7 @@
                     },
                     axis: {
                         y: {
+                            show: true,
                             label:{
                                 text: 'License Usage %',
                                 position: 'outer-middle'
@@ -98,17 +165,17 @@
                                 format: '%b-%Y' //this tells the chart how to display the x axis data
                             },
                             padding:{
-                                left: 0,
-                                right: 0
+                                left: 100,
+                                right: 100
                             }
                         }
                     },
                     transition: {
-                        duration: 1000
+                        duration: 500
                     }
                 }
 
-                return chartObject;
+                return chartObjectDefinition;
             }
 
             /***

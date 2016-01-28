@@ -10,3 +10,53 @@
 .mychart .c3-target-main-data{
 
 }
+
+/*C3 override*/
+/*-- Point --*/
+
+.c3-circle{
+    fill: white; !important;
+}
+.c3-circle._expanded_ {
+    transition: stroke 2s, transform 500ms;
+    stroke-width: 2px;
+    stroke: black;
+}
+
+.c3-circle {
+    stroke-width: 1px;
+    stroke: trasparent;
+}
+
+
+/*lines*/
+.mychart .c3-target-main-data{
+    stroke-width: 2;
+}
+.mychart .c3-target-second-data{
+    stroke-dasharray: 2,2;
+}
+.mychart .c3-target-third-data{
+    stroke-dasharray: 10,10;
+}
+
+/*axis y*/
+.mychart .c3-axis-y path.domain{
+    opacity: 0;
+}
+.mychart .c3-axis-y line{
+    opacity: 0;
+}
+
+/*axis x*/
+.mychart .c3-axis-x path.domain{
+    opacity: 0.5;
+}
+.mychart .c3-axis-x line{
+    opacity: 0.5;
+}
+
+/*legend*/
+.mychart .c3-legend-item-hidden{
+
+}
