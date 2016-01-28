@@ -3,12 +3,14 @@
  */
 
 /*Global objects*/
+var masterClass = 'mychart';
+var mainDataClassName = 'c3-target-main-data';
+var secondDataClassName = 'c3-target-second-data';
+var thirdDataClassName = 'c3-target-third-data';
 var chartObject;
 var maxChartsToShow;
-var colorsArray = [];
-main: "#01a982",
-    second: "#614767",
-    third: "#ff8d6d"
+var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with CSS?
+
             /***
              * Does nothing - needed to block build in mouseover mouseout events
              * @param id
@@ -41,8 +43,23 @@ main: "#01a982",
 
             }
 
+            function setColors(idList){
+                var colors=[];
+                for (var i = 0; i < idList.length; i++) {
+                    colors[idList[i]]=colorsArray[i];
+                }
+                chartObject.data.colors(colors);
+            }
 
+            function setCustomClasses(id,flags){
+                var el = d3.select("."+masterClass+" .c3-line-"+id); //access the lines directly by id
 
+                el.classed({
+                    'c3-target-main-data':flags[0],
+                    'c3-target-second-data':flags[1],
+                    'c3-target-third-data':flags[2]
+                });
+            }
 
             function onLegendClick(clickedId) {
                 var shown=[];
@@ -53,6 +70,7 @@ main: "#01a982",
                     if(clickedId != shownObj[i].id){
                         shown.push(shownObj[i].id);
                     }else{
+                        setCustomClasses(shownObj[i].id,[false,false,false]); //remove main visible classes from unselected element
                         remove = true;
                     }
                 }
@@ -64,7 +82,11 @@ main: "#01a982",
 
                 if(!remove){
                     shown.push(clickedId);
+                    setCustomClasses(clickedId,[true,false,false]); //make the new one MAIN line
                 }
+                setCustomClasses(shown[0],[false,true,false]);
+                setCustomClasses(shown[1],[false,false,true]);
+                setColors(shown);
 
                 chartObject.hide(); //hide all
                 chartObject.show(shown);
@@ -122,10 +144,10 @@ main: "#01a982",
                             data2: "second-data",
                             data3: "third-data"
                         },
-                        colors: { //TODO move to CSS?
-                            data1: "#01a982",
-                            data2: "#614767",
-                            data3: "#ff8d6d"
+                        colors:{
+                            data1: colorsArray[0],
+                            data2: colorsArray[1],
+                            data3: colorsArray[2]
                         },
                         shown: ["data1","data2","data3"],
                         xFormat: "%Y-%m" //this tells the chart how to interpret the x axis data
