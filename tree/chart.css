@@ -30,16 +30,18 @@
 
 
 /*lines*/
-.mychart .c3-target-main-data path{
+.mychart .c3-target-main-data{
     stroke-width: 2;
     stroke: #01a982;
 }
-.mychart .c3-target-second-data path{
+.mychart .c3-target-second-data{
     stroke-dasharray: 2,2;
+    strok-width: 1;
     stroke: #614767;
 }
-.mychart .c3-target-third-data path{
+.mychart .c3-target-third-data{
     stroke-dasharray: 10,10;
+    stroke-width: 1;
     stroke: #ff8d6d;
 }
 
@@ -63,6 +65,8 @@
 .mychart .c3-legend-item-hidden{
     opacity: 1;
 }
-.mychart .c3-legend-item-hidden .c3-legend-item-tile{
-    opacity: 0;
+
+.mychart .c3-legend-item-hidden line{
+    opacity: 1;
+    stroke: grey;
 }

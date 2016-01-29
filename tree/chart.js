@@ -4,12 +4,14 @@
 
 /*Global objects*/
 var masterClass = 'mychart';
-var mainDataClassName = 'c3-target-main-data';
-var secondDataClassName = 'c3-target-second-data';
-var thirdDataClassName = 'c3-target-third-data';
+var mainDataClassName;// = 'c3-target-main-data';
+var secondDataClassName;// = 'c3-target-second-data';
+var thirdDataClassName;// = 'c3-target-third-data';
 var chartObject;
 var maxChartsToShow;
-var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with CSS?
+var colorsArray;// = ["#01a982", "#614767", "#ff8d6d","#f0f0f0"]; //TODO how to do this with CSS?
+var shown;
+
 
             /***
              * Does nothing - needed to block build in mouseover mouseout events
@@ -17,6 +19,15 @@ var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with 
              */
             function doNothing(id){
                 return;
+            }
+
+            function initChart(shownIdArray, colorPaletteArray, shownCssArray){
+                //TODO init masterClass from dom object
+                shown = shownIdArray; //set the array of displayed lines
+                colorsArray = colorPaletteArray;
+                mainDataClassName = 'c3-target-'+shownCssArray[0];
+                secondDataClassName = 'c3-target-'+shownCssArray[1];
+                thirdDataClassName = 'c3-target-'+shownCssArray[2];
             }
 
 
@@ -43,6 +54,11 @@ var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with 
 
             }
 
+            function removeSVGStyleColoring(){
+                var lines = d3.selectAll("."+masterClass+" .c3-legend-item-hidden line");
+                lines.style("stroke",null);
+            }
+
             function setColors(idList){
                 var colors=[];
                 for (var i = 0; i < idList.length; i++) {
@@ -50,6 +66,7 @@ var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with 
                 }
                 chartObject.data.colors(colors);
             }
+
 
             function setCustomClasses(id,flags){
                 var el = d3.select("."+masterClass+" .c3-line-"+id); //access the lines directly by id
@@ -61,8 +78,13 @@ var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with 
                 });
             }
 
+
+            /***
+             *
+             * @param clickedId
+             */
             function onLegendClick(clickedId) {
-                var shown=[];
+                shown = []; //reset shown array
                 var remove = false;
                 var shownObj = chartObject.data.shown();
                 //fetch all shown ids
@@ -82,10 +104,11 @@ var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with 
 
                 if(!remove){
                     shown.push(clickedId);
-                    setCustomClasses(clickedId,[true,false,false]); //make the new one MAIN line
+                    setCustomClasses(clickedId,[false,false,true]); //make the new one MAIN line
+
                 }
-                setCustomClasses(shown[0],[false,true,false]);
-                setCustomClasses(shown[1],[false,false,true]);
+                setCustomClasses(shown[0],[true,false,false]);
+                setCustomClasses(shown[1],[false,true,false]);
                 setColors(shown);
 
                 chartObject.hide(); //hide all
@@ -99,7 +122,6 @@ var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with 
              * @returns {{bindto: *, data: {x: *, columns: Array, xFormat: string}, axis: {y: {label: string, padding: {top: number, bottom: number}, tick: {format: Function}}, x: {type: string, tick: {format: string}, padding: {left: number, right: number}}}}}
              */
             function getC3LicenseUsageChart(bindToSelector, data, maxResults){
-                //var _NEWLINE = "&#xA;"
                 var xAxisName = data.xAxisName;
                 var xFormat = data.xFormat;
                 var chartData = getChartData(data);
@@ -139,17 +161,29 @@ var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with 
                         x: xAxisName,
                         columns: chartData["columns"],
                         names: chartData["names"],
-                        classes: { //access via c3-target-main-data
+/*                        classes: { //access via c3-target-main-data
                             data1: "main-data",
                             data2: "second-data",
                             data3: "third-data"
-                        },
-                        colors:{
+                        },*/
+/*                        colors:{
                             data1: colorsArray[0],
                             data2: colorsArray[1],
                             data3: colorsArray[2]
+                        },*/
+                        color: function (color, d) {
+                            try{
+                                /*d can be object or plain string (id like data1)
+                                 depends on the color it represents, if its legend its plain id, if its line its an obj*/
+                                var inx;
+                                (d.id) ? inx= shown.indexOf(d.id) : inx= shown.indexOf(d);
+                                return (inx < 0) ? colorsArray[colorsArray.length-1] : colorsArray[inx];
+                            }
+                            catch(e){
+                                return color;
+                            }
                         },
-                        shown: ["data1","data2","data3"],
+                        shown: shown,
                         xFormat: "%Y-%m" //this tells the chart how to interpret the x axis data
                     },
                     point: {
@@ -194,6 +228,13 @@ var colorsArray = ["#01a982", "#614767", "#ff8d6d"]; //TODO how to do this with 
                     },
                     transition: {
                         duration: 500
+                    },
+                    onrendered: function(){
+                    },
+                    oninit: function() {
+                        initChart(["data1","data2","data3"],
+                                  ["#01a982", "#614767", "#ff8d6d","#f0f0f0"],
+                                  ["main-data", "second-data", "third-data"]);
                     }
                 }
 

@@ -15,23 +15,16 @@
 </head>
 <body>
 <div>
-<div class="mychart"></div>
-<div class="controller">
-    <ul>
-        <li onclick="loadData(this.innerText)">data1</li>
-        <li onclick="loadData(this.innerText)">data2</li>
-        <li onclick="loadData(this.innerText)">data3</li>
-        <li onclick="loadData(this.innerText)">data4</li>
-        <li onclick="loadData(this.innerText)">data5</li>
-    </ul>
-</div>
+    <div id="license-usage-chart" class="mychart"></div>
 </div>
 <script>
     chartObject = c3.generate(getC3LicenseUsageChart('.mychart', datasrc, 3));
     chartObject.hide();
     chartObject.show(['data1','data2','data3']);
-    //chartObject.focus('data1');
-    var controllerList = document.getElementsByClassName("controller");
+    setCustomClasses(shown[0],[true,false,false]);
+    setCustomClasses(shown[1],[false,true,false]);
+    setCustomClasses(shown[2],[false,false,true]);
+
 </script>
 </body>
 </html>
