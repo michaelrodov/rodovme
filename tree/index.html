@@ -18,12 +18,13 @@
     <div id="license-usage-chart" class="mychart"></div>
 </div>
 <script>
-    chartObject = c3.generate(getC3LicenseUsageChart('.mychart', datasrc, 3));
+    chartObject = c3.generate(getC3LineChart('.mychart', datasrc, 3));
     chartObject.hide();
     chartObject.show(['data1','data2','data3']);
     setCustomClasses(shown[0],[true,false,false]);
     setCustomClasses(shown[1],[false,true,false]);
     setCustomClasses(shown[2],[false,false,true]);
+    setSecondaryXAxisTicks(datasrc.licenses[datasrc.xAxisName], "^20[0-9][0-9]");
 
 </script>
 </body>

@@ -54,11 +54,6 @@ var shown;
 
             }
 
-            function removeSVGStyleColoring(){
-                var lines = d3.selectAll("."+masterClass+" .c3-legend-item-hidden line");
-                lines.style("stroke",null);
-            }
-
             function setColors(idList){
                 var colors=[];
                 for (var i = 0; i < idList.length; i++) {
@@ -78,7 +73,22 @@ var shown;
                 });
             }
 
+            /**
+             * Will be implemented in the future by c3 (multiline xAxis)
+             * @param xAxisData
+             */
+            function setSecondaryXAxisTicks(xAxisData, regexSelector){
+                if(xAxisData) {
+                    var legendArray = d3.selectAll(".mychart .c3-axis-x .tick text[style*='display: block']");
+                    for (var i = 1; i < regexSelector.length; i++) {
+                        legendArray[0][i].append("tspan")
+                                        .text(xAxisData[i].match(regexSelector))
+                                        .attr("dy", "12")
+                                        .attr("x", "0");
+                    }
 
+                }
+            }
             /***
              *
              * @param clickedId
@@ -119,13 +129,13 @@ var shown;
              * Define c3 line chart for license usage information
              * @param bindToSelector
              * @param data
-             * @returns {{bindto: *, data: {x: *, columns: Array, xFormat: string}, axis: {y: {label: string, padding: {top: number, bottom: number}, tick: {format: Function}}, x: {type: string, tick: {format: string}, padding: {left: number, right: number}}}}}
-             */
-            function getC3LicenseUsageChart(bindToSelector, data, maxResults){
+             * @returns
+             * */
+            function getC3LineChart(bindToSelector, data, maxDisplayedResults){
                 var xAxisName = data.xAxisName;
                 var xFormat = data.xFormat;
                 var chartData = getChartData(data);
-                maxChartsToShow = maxResults;
+                maxChartsToShow = maxDisplayedResults;
 
                 /*Object that represents structure and properties of the c3 chart*/
                 var chartObjectDefinition = {
@@ -133,12 +143,6 @@ var shown;
                     legend: {
                         show: true,
                         position: 'right',
-                        inset: {
-                            anchor: 'top-right',
-                            x: 20,
-                            y: 10,
-                            step: data.licenses.length
-                        },
                         item: {
                             onclick: onLegendClick,
                             onmouseover: doNothing,
@@ -161,16 +165,6 @@ var shown;
                         x: xAxisName,
                         columns: chartData["columns"],
                         names: chartData["names"],
-/*                        classes: { //access via c3-target-main-data
-                            data1: "main-data",
-                            data2: "second-data",
-                            data3: "third-data"
-                        },*/
-/*                        colors:{
-                            data1: colorsArray[0],
-                            data2: colorsArray[1],
-                            data3: colorsArray[2]
-                        },*/
                         color: function (color, d) {
                             try{
                                 /*d can be object or plain string (id like data1)
@@ -206,7 +200,7 @@ var shown;
                             },
                             padding: {
                                 top: 60,
-                                bottom: 1
+                                bottom: 30
                             },
                             tick: {
                                 format: function(y){
@@ -216,13 +210,15 @@ var shown;
                         },
                         x: {
                             type: 'timeseries',
+                            height: 50,
                             tick: {
                                 max: 0,
-                                format: '%b-%Y' //this tells the chart how to display the x axis data
+                                fit: true,
+                                format: '%b' //this tells the chart how to display the x axis data
                             },
                             padding:{
                                 left: 100,
-                                right: 100
+                                right: 0
                             }
                         }
                     },
@@ -230,6 +226,9 @@ var shown;
                         duration: 500
                     },
                     onrendered: function(){
+ /*                       if(chartObject){
+                            setSecondaryXAxisTicks(chartObject.data.values(chartObject.data.xAxisName));
+                        }*/
                     },
                     oninit: function() {
                         initChart(["data1","data2","data3"],
@@ -256,7 +255,7 @@ var shown;
                     //TODO the selector of the hosting element should be passed dynamically
 
                     //the actual generation and placemenet of the chart inside DOM element
-                    c3.generate(getC3LicenseUsageChart('#solutionLicenseUsageChart', data.data, 3));
+                    c3.generate(getC3LineChart('#solutionLicenseUsageChart', data.data, 3));
                 }
             );*/
 

@@ -3,13 +3,7 @@
     position: relative;
     width: 70%;
 }
-.controller{
-    float: left;
-    position: relative;
-}
-.mychart .c3-target-main-data{
 
-}
 
 /*C3 override*/
 /*-- Point --*/
@@ -57,8 +51,14 @@
 .mychart .c3-axis-x path.domain{
     opacity: 0.5;
 }
+
 .mychart .c3-axis-x line{
     opacity: 0.5;
+}
+
+.mychart .c3-axis-x .tick text :first-child{
+    font-weight: bold;
+    font-size: 12px;
 }
 
 /*legend*/
