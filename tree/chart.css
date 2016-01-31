@@ -70,3 +70,39 @@
     opacity: 1;
     stroke: grey;
 }
+
+/*tooltip*/
+.tooltip-value{
+    background-color:#000;
+    color:#FFF;
+    width:100px;
+    text-align:center;
+    padding:4px;
+    font-size: 14px;
+}
+.tooltip-value .right{
+    float: right;
+}
+.tooltip-value .left{
+    float: left;
+}
+ .tooltip-date{
+    background-color:#00A982;
+    color:#FFF;
+    width:100px;
+    text-align:center;
+    padding:4px;
+}
+/* creates tooltip triangle */
+ .triangled:after {
+    content: "";
+    display: block; /* reduce the damage in FF3.0 */
+    position: absolute;
+    bottom: -10px;
+    margin-left: -10px;
+    left: 50%;
+    width: 0;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #00A982 transparent;
+}

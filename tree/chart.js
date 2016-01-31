@@ -3,7 +3,7 @@
  */
 
 /*Global objects*/
-var masterClass = 'mychart';
+var containerElementSelector;// = 'mychart';
 var mainDataClassName;// = 'c3-target-main-data';
 var secondDataClassName;// = 'c3-target-second-data';
 var thirdDataClassName;// = 'c3-target-third-data';
@@ -25,11 +25,33 @@ var shown;
                 //TODO init masterClass from dom object
                 shown = shownIdArray; //set the array of displayed lines
                 colorsArray = colorPaletteArray;
+                //TODO configure automatically
                 mainDataClassName = 'c3-target-'+shownCssArray[0];
                 secondDataClassName = 'c3-target-'+shownCssArray[1];
                 thirdDataClassName = 'c3-target-'+shownCssArray[2];
+
             }
 
+            function createC3LineChart(bindToSelector, data, initialElementsArray, secondaryAxisRegex){
+                containerElementSelector = bindToSelector;
+
+                /*create and init*/
+                chartObject = c3.generate(getC3LineChart(bindToSelector, data, initialElementsArray.length));
+
+                /*post creation init - mostly UI init*/
+                chartObject.hide();
+                chartObject.show(initialElementsArray);
+                //TODO configure automatic
+                setCustomClasses(shown[0],[true,false,false]);
+                setCustomClasses(shown[1],[false,true,false]);
+                setCustomClasses(shown[2],[false,false,true]);
+
+                //todo move to custom design
+                //setSecondaryXAxisTicks(data["xAxisName"], "^20[0-9][0-9]");
+
+
+                return chartObject;
+            }
 
             /**
              * build an array of arrays containing the xAxis labels and the actual data
@@ -41,8 +63,8 @@ var shown;
                 var namesArray=[]; //global objects
                 var columnsArray=[];
                 var chartData=[];
-                for (var key in data.licenses) {
-                    columnsArray.push(data.licenses[key]); //the array of data points that is displayed on the chart
+                for (var key in data) {
+                    columnsArray.push(data[key]); //the array of data points that is displayed on the chart
                     namesArray['data' + i] = key.toString(); //the names that is going to displayed
                     i++;
                 }
@@ -62,9 +84,8 @@ var shown;
                 chartObject.data.colors(colors);
             }
 
-
             function setCustomClasses(id,flags){
-                var el = d3.select("."+masterClass+" .c3-line-"+id); //access the lines directly by id
+                var el = d3.select(containerElementSelector+" .c3-line-"+id); //access the lines directly by id
 
                 el.classed({
                     'c3-target-main-data':flags[0],
@@ -89,6 +110,12 @@ var shown;
 
                 }
             }
+
+            function addCustomDesignElements(){
+                //TODO add text above legend
+                //TODO add wrapping square around legend
+            }
+
             /***
              *
              * @param clickedId
@@ -132,7 +159,7 @@ var shown;
              * @returns
              * */
             function getC3LineChart(bindToSelector, data, maxDisplayedResults){
-                var xAxisName = data.xAxisName;
+                //var xAxisName = data.xAxisName;
                 var xFormat = data.xFormat;
                 var chartData = getChartData(data);
                 maxChartsToShow = maxDisplayedResults;
@@ -158,11 +185,29 @@ var shown;
                         }
                     },
                     tooltip: {
-                        show: false
+                        show: true,
+                        contents: function (points) {
+                            //TODO add validations
+                            var valuesListTemplate = "<div id='tooltip-$index'><div class='left'>$name</div><div class='right'>$value</div></div>";
+                            var valuesListHtml="";
+                            var dateFormatter = d3.time.format("%b-%Y"); //formatter of the bottom MON-YYYY value
+
+                            points.forEach(function(currentPoint, index, array){
+                                valuesListHtml += valuesListTemplate.replace("$index",index).replace("$name", currentPoint.name).replace("$value",currentPoint.value);
+                            });
+
+                            //var valueFormat = d3.format("$,.2f");
+                            var dateString = dateFormatter(points[0].x);
+
+                            var html = '<div class="tooltip-value">'+valuesListHtml+'</div>'
+                            html += '<div class="tooltip-date triangled">'+dateString+'</div>';
+
+                            return html;
+                        }
                     },
                     data: {
                         type: 'area-spline', //TODO check if its ok with UX (spline not line)
-                        x: xAxisName,
+                        x: "xAxisName",
                         columns: chartData["columns"],
                         names: chartData["names"],
                         color: function (color, d) {
@@ -181,7 +226,7 @@ var shown;
                         xFormat: "%Y-%m" //this tells the chart how to interpret the x axis data
                     },
                     point: {
-                        show: false,
+                        show: true,
                         r: 5,
                         focus: {
                             expand: {
@@ -226,11 +271,9 @@ var shown;
                         duration: 500
                     },
                     onrendered: function(){
- /*                       if(chartObject){
-                            setSecondaryXAxisTicks(chartObject.data.values(chartObject.data.xAxisName));
-                        }*/
                     },
                     oninit: function() {
+                        //TODO move to constructor function
                         initChart(["data1","data2","data3"],
                                   ["#01a982", "#614767", "#ff8d6d","#f0f0f0"],
                                   ["main-data", "second-data", "third-data"]);

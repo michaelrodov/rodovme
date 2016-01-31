@@ -15,17 +15,29 @@
 </head>
 <body>
 <div>
+    <div class="license-usage-chart-select">
+        <select id="chartTypeSelector">
+            <option value="licenses">LICENSE USAGE</option>
+            <option value="usages">PRODUCT USAGE</option>
+        </select>
+    </div>
     <div id="license-usage-chart" class="mychart"></div>
 </div>
 <script>
-    chartObject = c3.generate(getC3LineChart('.mychart', datasrc, 3));
-    chartObject.hide();
-    chartObject.show(['data1','data2','data3']);
-    setCustomClasses(shown[0],[true,false,false]);
-    setCustomClasses(shown[1],[false,true,false]);
-    setCustomClasses(shown[2],[false,false,true]);
-    setSecondaryXAxisTicks(datasrc.licenses[datasrc.xAxisName], "^20[0-9][0-9]");
+    /*initial creation*/
+    createC3LineChart(".mychart", datasrc.licenses, ['data1','data2','data3'], "^20[0-9][0-9]");
 
+    document.getElementById("chartTypeSelector").onchange=function(event){
+        createC3LineChart(".mychart", datasrc[event.srcElement.selectedOptions[0].value], ['data1','data2','data3'], "^20[0-9][0-9]");
+    }
 </script>
+<div style="position: absolute">
+<div class="tooltip-value">
+    <div><div class="left">license1</div><div class="right">50</div></div>
+    <div><div class="left">license3</div><div class="right">30</div></div>
+    <div><div class="left">license4</div><div class="right">40</div></div>
+</div>
+<div class="triangled tooltip-date">MAR-2015</div>
+</div>
 </body>
 </html>
