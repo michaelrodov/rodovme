@@ -186,6 +186,10 @@ var shown;
                     },
                     tooltip: {
                         show: true,
+/*                        position: function (data, width, height, element) {
+                            var x = element.getBoundingClientRect().left; //this is the exact point location
+                            return {top: height, left: x}
+                        },*/
                         contents: function (points) {
                             //TODO add validations
                             var valuesListTemplate = "<div id='tooltip-$index'><div class='left'>$name</div><div class='right'>$value</div></div>";
