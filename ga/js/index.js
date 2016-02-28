@@ -26,6 +26,7 @@ dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
     $scope.data.push({name:"srl", users: "0", title: "StormRunner Load", logo: "img/srl.png",gaid: "ga:87422827"});
     $scope.data.push({name:"appm", users: "0", title: "AppPulse Mobile", logo: "img/appm.png",gaid: "ga:71897204"});
     $scope.data.push({name:"ma", users: "0", title: "MyAccount", logo: "img/grey-HP-logo.png",gaid: "ga:81002014"});
+    $scope.data.push({name:"nga", users: "0", title: "Next Generation ALM", logo: "img/agm.png",gaid: "ga:113138908"});
 	 
 
     $scope.refresh = function() {

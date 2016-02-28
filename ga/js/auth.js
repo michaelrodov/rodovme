@@ -4,6 +4,7 @@
 	  var sawGaId = 'ga:85904512';
 	  var srlGaId = 'ga:87422827';
 	  var apmGaId = 'ga:93588054';
+  	  var ngaGaId = 'ga:113138908';
 	  var authentication = null;
      
 var apiKey = location.search

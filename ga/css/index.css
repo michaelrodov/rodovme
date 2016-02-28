@@ -261,3 +261,26 @@ body{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#05abe0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
 }
+
+.flex-item:nth-child(6) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+	
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#87e0fd+0,53cbf1+40,05abe0+100;Blue+3D+%23+16 */
+	background: #9370DB; /* Old browsers */
+	background: -moz-linear-gradient(45deg,  #9370DB 0%, #53cbf1 40%, FFFFFF 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#9370DB), color-stop(40%,#53cbf1), color-stop(100%,FFFFFF)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(45deg,  #9370DB 0%,#53cbf1 40%,FFFFFF 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(45deg,  #9370DB 0%,#53cbf1 40%,FFFFFF 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(45deg,  #9370DB 0%,#53cbf1 40%,FFFFFF 100%); /* IE10+ */
+	background: linear-gradient(45deg,  #9370DB 0%,#53cbf1 40%,FFFFFF 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9370DB', endColorstr='FFFFFF',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
