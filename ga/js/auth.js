@@ -3,7 +3,7 @@
 	  var maGaId = 'ga:81002014';
 	  var sawGaId = 'ga:85904512';
 	  var srlGaId = 'ga:87422827';
-	  var apmGaId = 'ga:93588054';
+	  var apmGaId = 'ga:81365581';
   	  var ngaGaId = 'ga:97995851';
 	  var authentication = null;
      
