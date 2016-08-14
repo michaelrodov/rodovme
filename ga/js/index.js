@@ -10,7 +10,7 @@ var dashApp = angular.module('dashApp', ['ngMaterial'])
 					
 dashApp.controller('dashCtrl', function($scope, $http, $interval, $mdToast) {
 	
-	var REFRESH_RATE_SEC = 10;
+	var REFRESH_RATE_SEC = 60;
 	var linearBackoff = 0;
 	var linearBackoffCycle = 3;
 	var AUTH_RATE = 300;
