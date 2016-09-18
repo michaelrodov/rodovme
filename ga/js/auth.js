@@ -1,7 +1,7 @@
       var clientId = '331390481649-7c33q2tflt39r9asunr1j12775tcorvb.apps.googleusercontent.com';
       var scopes = 'https://www.googleapis.com/auth/analytics';
 	  var maGaId = 'ga:81002014';
-	  var sawGaId = 'ga:85904512';
+	  var sawGaId = 'ga:85914404';
 	  var srlGaId = 'ga:87422827';
 	  var apmGaId = 'ga:81365581';
   	  var ngaGaId = 'ga:113138908';
